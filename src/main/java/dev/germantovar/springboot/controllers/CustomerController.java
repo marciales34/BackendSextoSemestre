@@ -32,17 +32,10 @@ public class CustomerController {
     }
 
     @PostMapping("Enviar")
-    public ResponseEntity<String> save(@RequestBody Customer costumer) {
-        service.save(costumer);
-        try {
-            ejecutarComandosGit();
-            return ResponseEntity.ok("{\"message\": \"Registro exitoso y cambios subidos a GitHub.\"}");
-        } catch (IOException | InterruptedException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"message\": \"Error al subir cambios a GitHub.\"}");
-        }
-    }
+    public void save(@RequestBody Customer costumer) {
 
+        service.save(costumer);
+    }
 
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody Customer loginRequest) {
@@ -56,30 +49,6 @@ public class CustomerController {
         }
     }
 
-    // Método para ejecutar los comandos Git después del registro
-
-    private void ejecutarComandosGit() throws IOException, InterruptedException {
-        String proyectoDir = "C:\\DocumentosDiego\\BackendAbogados\\BackendSextoSemestre";
-        ProcessBuilder builder = new ProcessBuilder(
-                "cmd.exe", "/c",
-                "cd " + proyectoDir + " && git add . && git commit -m \"Nuevo registro de abogado agregado automáticamente\" && git push origin main"
-        );
-        builder.redirectErrorStream(true);
-        Process process = builder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
-        int exitCode = process.waitFor();
-        if (exitCode == 0) {
-            System.out.println("Cambios subidos a GitHub correctamente.");
-        } else {
-            System.out.println("Error al subir cambios a GitHub. Código de salida: " + exitCode);
-        }
-    }
-
-    //VERIFICACION DE SUBIDA AL REPOSITORIO
 }
 
 
