@@ -48,7 +48,6 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
-//GHAEHAERHERH
 
 }
 
