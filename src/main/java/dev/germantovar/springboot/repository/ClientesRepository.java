@@ -8,4 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface ClientesRepository extends JpaRepository<Cliente, Long> {
     Cliente findByCliente(Long id);
 }
-//Committ
+//Committt
